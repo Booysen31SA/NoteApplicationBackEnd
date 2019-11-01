@@ -1,0 +1,7 @@
+{
+    "name": "noteapplication/backend",
+    "description": "fat free back-end",
+    "require": {
+        "bcosca/fatfree": "^3.6"
+    }
+}
