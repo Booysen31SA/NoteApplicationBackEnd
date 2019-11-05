@@ -2,7 +2,7 @@
 
   class Controller{
       protected $f3;
-      protected $database;
+      protected $db;
 
       function beforeroute(){
 
@@ -16,13 +16,13 @@
             $f3 = Base::instance();
             $this->f3 = $f3;
 
-            $database = new DB\SQL(
+            $db = new DB\SQL(
                 $f3->get('mysql.db'),
                 $f3->get('mysql.username'),
                 $f3->get('mysql.password'),
                 array(\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION)
             );
-            $this-> database = $database;
+            $this->db = $db;
             
 
           }catch(Exception $e){
