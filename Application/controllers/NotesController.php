@@ -1,0 +1,136 @@
+<?php
+   class NotesController extends Controller{
+
+    function beforeroute() {
+        //Check to make sure token passed is valid
+        try {
+            $userToken = new UserToken($this->db);
+            $token = $this->f3->get('HEADERS.Token');
+    
+            $result = $userToken->verifyToken($token);
+    
+            if(empty($result) || $result['expiryDate'] < date('Y-m-d H:i:s')) {
+                $this->f3->error(403);
+            }
+        }
+        catch(Exception $e) {
+            header('Content-type:application/json');
+            echo json_encode(array(
+                'success' => false,
+                'message' => $e->getMessage()
+            ));
+            
+            exit;
+        }
+    }
+
+    function getNotes($f3, $params){
+ 
+        header('Content-type:application/json');
+
+        try{
+
+            $disabled = $params['disabled'];
+
+            if($disabled < 0){
+                echo json_encode(array(
+                    'success' => false,
+                    'message' => 'Missing one or more required fields'
+                ));
+
+                return;
+            }
+
+            
+        }catch(Exception $e){
+            echo json_encode(array(
+                'success' => false,
+                'message' => $e->getMessage()
+            ));
+        }
+    }
+
+    function create($f3, $params){
+        
+        header('Content-type:application/json');
+
+        try{
+
+            $data = json_decode($f3->get('BODY'), true);
+            $id = $params['titleID'];
+
+            if(empty($data['titleID'])){
+                echo json_encode(array(
+                    'success' => false,
+                    'message' => 'Missing one or more required fields'
+                ));
+                return;
+            }
+            if(empty($data['message'])){
+                echo json_encode(array(
+                    'success' => false,
+                    'message' => 'Are you sure you want a empty Note?'
+                ));
+                return;
+            }
+
+            $notes = new Notes($this->db);
+
+            if(!empty($id)){
+
+                $result = $notes->readById($id);
+
+                if(empty($result)){
+                    echo json_encode(array(
+                        'success' => false,
+                        'message' => 'Note does not exist'
+                    ));
+        
+                    return; 
+                }
+
+                $data['message'] = $data['message'];
+                $data['dateModified'] = date('Y-m-d H:i:s');
+        
+                $notes->create($data);
+    
+                echo json_encode(array(
+                    'success' => true,
+                    'message' => 'note successfully updated'
+                ));
+    
+                return;
+            }else{
+                $result = $notes->readById($id);
+    
+                if(!empty($result)) {
+                
+                    echo json_encode(array(
+                        'success' => false,
+                        'message' => 'Note already exist'
+                    ));
+        
+                    return;
+        
+                }
+    
+                $data['dateCreated'] = date('Y-m-d H:i:s');
+                $data['disabled'] = 0;
+    
+                $notes->create($data);
+    
+                echo json_encode(array(
+                    'success' => true,
+                    'message' => 'Note successfully created'
+                ));
+            }
+
+        }catch(Exception $e){
+            echo json_encode(array(
+                'success' => false,
+                'message' => $e->getMessage()
+            ));
+        }
+    }
+   }
+?>
