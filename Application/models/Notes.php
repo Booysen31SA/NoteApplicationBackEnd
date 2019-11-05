@@ -48,7 +48,7 @@
           }
        }
 
-       public function getId($id){
+       public function getIdOnly($id){
         try{
 
           $query = "SELECT titleID FROM notes WHERE titleID = '$id' AND disabled = 0";
