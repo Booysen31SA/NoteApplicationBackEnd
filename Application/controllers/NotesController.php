@@ -73,6 +73,13 @@
                 ));
                 return;
             }
+            if(empty($data['id'])){
+                echo json_encode(array(
+                    'success' => false,
+                    'message' => 'Missing one or more required fields'
+                ));
+                return;
+            }
 
             $notes = new Notes($this->db);
 
@@ -174,6 +181,55 @@
                 'message' => $e->getMessage()
             ));
 
+        }
+    }
+
+    function delete($f3, $params){
+
+        header('Content-type:application/json');
+
+        try{
+
+            $titleID = $params['titleID'];
+
+            if(empty('titleID')){
+                echo json_encode(array(
+                    'success' => false,
+                    'message' => 'Missing one or more required fields'
+                ));
+                
+                return;
+            }
+
+            $notes = new Notes($this->db);
+
+            $result = $notes->readById($titleID);
+
+            if(empty($result)){
+                echo json_encode(array(
+                    'success' => false,
+                    'message' => 'Note does not exist'
+                ));
+
+                return;
+            }
+
+            $data['dateModified'] = date('Y-m-d H:i:s');
+            $data['titleID'] = $titleID;
+            $data['disabled'] = 1;
+
+            $notes->delete($data);
+
+            echo json_encode(array(
+                'success' => true,
+                'message' => 'Note successfully deactivated'
+            ));
+        }catch(Exception $e){
+
+            echo json_encode(array(
+                'success' => false,
+                'message' => $e->getMessage()
+            ));
         }
     }
    }

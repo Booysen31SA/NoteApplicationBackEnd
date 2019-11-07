@@ -192,5 +192,54 @@ class UserController extends Controller {
 
         }
     }
+    function delete($f3, $params){
+
+        header('Content-type:application/json');
+
+        try{
+
+            $userId = $params['userId'];
+
+            if(empty($userId)){
+                echo json_encode(array(
+                    'success' => false,
+                    'message' => 'Missing one or more required fields'
+                ));
+                
+                return;
+            }
+
+            $user = new User($this->db);
+
+            $result = $user->getById($userId);
+
+            if(empty($result)){
+                echo json_encode(array(
+                    'success' => false,
+                    'message' => 'User does not exist'
+                ));
+
+                return;
+            }
+
+            $data['modified'] = date('Y-m-d H:i:s');
+            $data['userId'] = $userId;
+            $data['disabled'] = 1;
+
+            $user->delete($data);
+
+            echo json_encode(array(
+                'success' => true,
+                'message' => 'User successfully deactivated'
+            ));
+
+        }catch(Exception $e){
+
+            echo json_encode(array(
+                'success' => false,
+                'message' => $e->getMessage()
+            ));
+        }
+    }
 }
 ?>

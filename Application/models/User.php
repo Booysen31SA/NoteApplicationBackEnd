@@ -84,5 +84,20 @@ class User extends DB\SQL\Mapper{
         }
     
     }
+
+    public function delete($data){
+       try{
+
+           $this->load(array('userId = ?', $data['userId']));
+
+            $this->copyFrom($data);
+    
+            $this->save();
+       }catch(Exception $e){
+
+        throw new Exception($e);
+
+       }
+    }
 }
 ?>
