@@ -9,7 +9,7 @@
        public function getAll($disabled){
            try{
 
-            $query = "SELECT * FROM notes WHERE disabled = $disabled";
+            $query = "SELECT * FROM notes WHERE disabled = '$disabled'";
 
             $result = $this->db->exec($query);
 
