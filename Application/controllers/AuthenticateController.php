@@ -11,7 +11,7 @@
 
         $result = $user->getById($data['userId'])[0];
 
-        if($result['disabled'] == 1 || $result['userGroup'] == 1 || count($result) <= 0){
+        if($result['disabled'] == 1 || $result['userGroup'] == 1 || $result == null){
             echo json_encode(array(
                 'success' => false,
                 'message' => 'Incorrect details entered'
