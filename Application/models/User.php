@@ -17,6 +17,16 @@ class User extends DB\SQL\Mapper{
         }
     }
 
+    public function getToken($userId){
+        try{
+
+            $query = "SELECT * FROM usertoken WHERE userId = '$userId' AND disabled = 0";
+            $result = $this->db->exec($query);
+            return $result;
+        }catch(Exception $e){
+          throw new Exception($e);
+        }
+    }
     public function getById($userId){
         try{
 
