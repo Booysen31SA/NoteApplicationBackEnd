@@ -1,7 +1,7 @@
 <?php
    class NotesController extends Controller{
 
-    function beforeroute() {
+    /*function beforeroute() {
         //Check to make sure token passed is valid
         try {
             $userToken = new UserToken($this->db);
@@ -22,7 +22,7 @@
             
             exit;
         }
-    }
+    }*/
 
     function getNotes($f3, $params){
  
