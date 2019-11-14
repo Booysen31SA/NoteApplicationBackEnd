@@ -50,5 +50,34 @@
          ));
        }
     }
+
+    function getToken($f3, $params){
+      try{
+
+        $data = json_decode($f3->get('BODY'), true);
+        $user = new User($this->db);
+
+        $result = $user->getToken($data['userId'])[0];
+       if($result == null){
+        echo json_encode(array(
+          'success' => false,
+          'message' => 'Please login again'
+      ));
+      return;
+       }
+
+       echo json_encode(array(
+        'success' => true,
+        'message' => $result
+    ));
+    return;
+
+       }catch(Exception $e){
+         echo json_encode(array(
+           'success' => false,
+           'message' => $e->getMessage()
+         ));
+       }
+    }
   }
 ?>
