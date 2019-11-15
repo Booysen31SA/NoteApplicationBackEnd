@@ -57,9 +57,9 @@
         try{
 
             $data = json_decode($f3->get('BODY'), true);
-            $id = $params['titleID'];
+            $id = $params['Title'];
 
-            if(empty($data['titleID'])){
+            if(empty($data['Title'])){
                 echo json_encode(array(
                     'success' => false,
                     'message' => 'Missing one or more required fields'
@@ -73,7 +73,7 @@
                 ));
                 return;
             }
-            if(empty($data['id'])){
+            if(empty($data['Title'])){
                 echo json_encode(array(
                     'success' => false,
                     'message' => 'Missing one or more required fields'
@@ -96,6 +96,7 @@
                     return; 
                 }
 
+                $data['Title'] = $data['Title'];
                 $data['message'] = $data['message'];
                 $data['dateModified'] = date('Y-m-d H:i:s');
         
@@ -145,7 +146,7 @@
 
         try{
 
-            $id = $params['titleID'];
+            $id = $params['Title'];
 
             if(empty($id)) {
 
@@ -190,9 +191,9 @@
 
         try{
 
-            $titleID = $params['titleID'];
+            $Title = $params['Title'];
 
-            if(empty('titleID')){
+            if(empty('Title')){
                 echo json_encode(array(
                     'success' => false,
                     'message' => 'Missing one or more required fields'
@@ -203,7 +204,7 @@
 
             $notes = new Notes($this->db);
 
-            $result = $notes->readById($titleID);
+            $result = $notes->readById($Title);
 
             if(empty($result)){
                 echo json_encode(array(
@@ -215,7 +216,7 @@
             }
 
             $data['dateModified'] = date('Y-m-d H:i:s');
-            $data['titleID'] = $titleID;
+            $data['Title'] = $Title;
             $data['disabled'] = 1;
 
             $notes->delete($data);
@@ -239,6 +240,7 @@
         try {
 
             $disabled = $params['disabled'];
+            $userId = $params['userId'];
 
             if($disabled < 0) {
 
@@ -253,7 +255,7 @@
 
             $notes = new Notes($this->db);
 
-            $result = $notes->getAll($disabled);
+            $result = $notes->getAll($disabled, $userId);
 
             echo json_encode(array(
                 'success' => true,

@@ -6,10 +6,10 @@
            parent::__construct($db, 'notes');
        }
 
-       public function getAll($disabled){
+       public function getAll($disabled, $userId){
            try{
 
-            $query = "SELECT * FROM notes WHERE disabled = '$disabled'";
+            $query = "SELECT * FROM notes WHERE disabled = '$disabled' AND userId = '$userId'";
 
             $result = $this->db->exec($query);
 
@@ -23,7 +23,7 @@
        public function create($data){
            
            try{
-              $this->load(array('titleID = ?', $data['titleID']));
+              $this->load(array('Title = ?', $data['Title']));
 
               $this->copyFrom($data);
 
@@ -37,7 +37,7 @@
        public function readById($id){
           try{
  
-            $query = "SELECT * FROM notes WHERE titleID = '$id' AND disabled = 0";
+            $query = "SELECT * FROM notes WHERE Title = '$id' AND disabled = 0";
 
             $result = $this->db->exec($query);
 
@@ -51,7 +51,7 @@
        public function getIdOnly($id){
         try{
 
-          $query = "SELECT titleID FROM notes WHERE titleID = '$id' AND disabled = 0";
+          $query = "SELECT Title FROM notes WHERE Title = '$id' AND disabled = 0";
 
           $result = $this->db->exec($query);
 
@@ -65,7 +65,7 @@
      public function delete($data){
       try{
 
-          $this->load(array('titleID = ?', $data['titleID']));
+          $this->load(array('Title = ?', $data['Title']));
 
            $this->copyFrom($data);
    
