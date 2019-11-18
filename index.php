@@ -9,6 +9,8 @@ $f3 = \Base::instance();
 //     }
 // );
 
+$f3->set('CORS.origin', '*');
+
 date_default_timezone_set("Africa/Johannesburg");
 
 $f3->config('Application/config/routes/routes.ini');
