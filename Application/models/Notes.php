@@ -9,7 +9,7 @@
        public function getAll($disabled, $userId){
            try{
 
-            $query = "SELECT * FROM notes WHERE disabled = '$disabled' AND userId = '$userId'";
+            $query = "SELECT * FROM notes WHERE disabled = '$disabled' AND userId = '$userId' ORDER BY dateCreated DESC";
 
             $result = $this->db->exec($query);
 
@@ -37,7 +37,7 @@
        public function readById($id){
           try{
  
-            $query = "SELECT * FROM notes WHERE Title = '$id' AND disabled = 0";
+            $query = "SELECT * FROM notes WHERE Title = '$id' AND disabled = 0 ORDER BY dateCreated DESC";
 
             $result = $this->db->exec($query);
 
@@ -75,6 +75,24 @@
        throw new Exception($e);
 
       }
+   }
+
+   public function getLatestCreated($userId){
+      try{
+
+         $query = "SELECT * FROM notes 
+                   Where userId = '$userId'
+                   AND disabled = 0
+                   ORDER BY dateCreated DESC
+                   LIMIT 4";
+
+         $result = $this->db->exec($query);
+
+         return $result;
+       }catch(Exception $e){
+
+         throw new Exception($e);
+       }
    }
    }
 ?>
