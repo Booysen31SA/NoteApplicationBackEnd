@@ -76,5 +76,23 @@
 
       }
    }
+
+   public function getLatestCreated($userId){
+      try{
+
+         $query = "SELECT * FROM notes 
+                   Where userId = '$userId'
+                   AND disabled = 0
+                   ORDER BY dateCreated DESC
+                   LIMIT 5";
+
+         $result = $this->db->exec($query);
+
+         return $result;
+       }catch(Exception $e){
+
+         throw new Exception($e);
+       }
+   }
    }
 ?>
