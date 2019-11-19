@@ -84,7 +84,7 @@
                    Where userId = '$userId'
                    AND disabled = 0
                    ORDER BY dateCreated DESC
-                   LIMIT 5";
+                   LIMIT 4";
 
          $result = $this->db->exec($query);
 
