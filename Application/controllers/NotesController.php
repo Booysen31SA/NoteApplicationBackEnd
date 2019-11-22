@@ -308,6 +308,7 @@
 
         echo json_encode(array(
             'success' => true,
+            'favorite' => $favorite,
             'message' => 'note successfully added to favorites'
         ));
 
