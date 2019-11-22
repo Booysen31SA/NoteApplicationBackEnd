@@ -48,6 +48,20 @@
           }
        }
 
+       public function favorite($id, $favorite){
+         try{
+
+           $query = "UPDATE notes SET favorite = $favorite WHERE ID = '$id';";
+
+           $result = $this->db->exec($query);
+
+           return $result;
+         }catch(Exception $e){
+
+           throw new Exception($e);
+         }
+      }
+
        public function getIdOnly($id){
         try{
 
@@ -61,6 +75,20 @@
           throw new Exception($e);
         }
      }
+     public function getId($id){
+      try{
+
+        $query = "SELECT * FROM notes WHERE ID = '$id' AND disabled = 0";
+
+        $result = $this->db->exec($query);
+
+        return $result;
+      }catch(Exception $e){
+
+        throw new Exception($e);
+      }
+   }
+
 
      public function delete($data){
       try{

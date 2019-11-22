@@ -274,5 +274,50 @@
         }
 
     }
-   }
+   
+
+   function favorite($f3, $params){
+
+   header('Content-type:application/json');
+
+    try{
+
+        $id = $params['ID'];
+
+        if(empty($id)) {
+
+            echo json_encode(array(
+                'success' => false,
+                'message' => 'Missing one or more required fields'
+            ));
+
+            return;
+        }
+
+        $notes = new Notes($this->db);
+        $noteCheck = $notes -> getId($id);
+        $favorite = $noteCheck[0]['favorite'];
+
+        if($favorite == 1){
+            $favorite = 0;
+        }else{
+            $favorite = 1;
+        }
+
+        $notes->favorite($id, $favorite);
+
+        echo json_encode(array(
+            'success' => true,
+            'message' => 'note successfully added to favorites'
+        ));
+
+    }catch(Exception $e){
+        echo json_encode(array(
+            'success' => false,
+            'message' => $e->getMessage()
+        ));
+
+    } 
+}
+}
 ?>
