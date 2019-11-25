@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 18, 2019 at 01:31 PM
+-- Generation Time: Nov 25, 2019 at 08:27 AM
 -- Server version: 5.7.26
--- PHP Version: 7.3.5
+-- PHP Version: 5.6.40
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `userGroupId` (`userGroupId`),
   KEY `userId` (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
@@ -57,7 +57,8 @@ CREATE TABLE IF NOT EXISTS `user` (
 INSERT INTO `user` (`id`, `userId`, `password`, `title`, `firstName`, `lastName`, `dateOfBirth`, `gender`, `mobileNumber`, `telephoneNumber`, `email`, `userGroupId`, `created`, `modified`, `disabled`) VALUES
 (1, 'MolleeC14ca', '5f4dcc3b5aa765d61d8327deb882cf99', 'Ms', 'Mollee', 'Carstairs', '1955-08-23', 'Female', '828-817-2296', '(740) 3601206', 'mcarstairs0@sourceforge.net', 2, '2016-02-15 15:17:46', '2018-11-06 15:01:55', 0),
 (2, 'CorbyH298e', '5f4dcc3b5aa765d61d8327deb882cf99', 'Rev', 'Corby', 'Hayth', '1983-08-31', 'Male', '332-916-0364', '(882) 4030237', 'chayth1@ustream.tv', 1, '2015-11-25 03:35:20', NULL, 0),
-(3, 'ascsaa2690', '696d29e0940a4957748fe3fc9efd22a3', 'Ms', 'ascsa', 'ascas', '1955-08-23', 'Female', '828-817-2236', '(740) 3601206', 'mcarstairs0@sourceforge.nets', 2, '2019-11-05 16:41:17', '2018-11-06 15:01:55', 0);
+(3, 'ascsaa2690', '696d29e0940a4957748fe3fc9efd22a3', 'Ms', 'ascsa', 'ascas', '1955-08-23', 'Female', '828-817-2236', '(740) 3601206', 'mcarstairs0@sourceforge.nets', 2, '2019-11-05 16:41:17', '2018-11-06 15:01:55', 0),
+(4, 'MatthewBbe2d', '5f4dcc3b5aa765d61d8327deb882cf99', 'mr', 'Matthew', 'Booysen', '2019-11-22', 'male', '0744390489', NULL, 'booysen31.matthew@gmail.com', 2, '2019-11-25 10:09:34', NULL, 0);
 
 --
 -- Constraints for dumped tables

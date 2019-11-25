@@ -274,5 +274,93 @@
         }
 
     }
-   }
+   
+
+   function favorite($f3, $params){
+
+   header('Content-type:application/json');
+
+    try{
+
+        $id = $params['ID'];
+
+        if(empty($id)) {
+
+            echo json_encode(array(
+                'success' => false,
+                'message' => 'Missing one or more required fields'
+            ));
+
+            return;
+        }
+
+        $notes = new Notes($this->db);
+        $noteCheck = $notes -> getId($id);
+        $favorite = $noteCheck[0]['favorite'];
+
+        if($favorite == 1){
+            $favorite = 0;
+        }else{
+            $favorite = 1;
+        }
+
+        $notes->favorite($id, $favorite);
+
+        echo json_encode(array(
+            'success' => true,
+            'favorite' => $favorite,
+            'message' => 'note successfully added to favorites'
+        ));
+
+    }catch(Exception $e){
+        echo json_encode(array(
+            'success' => false,
+            'message' => $e->getMessage()
+        ));
+
+    } 
+}
+
+function getAllFavorites($f3, $params) {
+
+    header('Content-type:application/json');
+
+    try {
+
+        $favorite = $params['favorite'];
+        $userId = $params['userId'];
+
+        if($favorite < 0) {
+
+            echo json_encode(array(
+                'success' => false,
+                'message' => 'Missing one or more required fields'
+            ));
+
+            return;
+
+        }
+
+        $notes = new Notes($this->db);
+
+        $result = $notes->getFavoriteList($favorite, $userId);
+
+        echo json_encode(array(
+            'success' => true,
+            'count' => count($result),
+            'results' => $result
+        ));
+
+    }
+    catch(Exception $e) {
+
+        echo json_encode(array(
+            'success' => false,
+            'message' => $e->getMessage()
+        ));
+
+    }
+
+}
+}
 ?>
