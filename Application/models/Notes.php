@@ -48,6 +48,18 @@
           }
        }
 
+       public function getFavoriteList($id, $userId){
+         try{
+           $query = "SELECT * FROM notes WHERE favorite = $id AND userId = '$userId' AND disabled = 0";
+
+           $result = $this->db->exec($query);
+
+           return $result;
+         }catch(Exception $e){
+           throw new Exception($e);
+         }
+       }
+
        public function favorite($id, $favorite){
          try{
 

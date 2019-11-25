@@ -320,5 +320,47 @@
 
     } 
 }
+
+function getAllFavorites($f3, $params) {
+
+    header('Content-type:application/json');
+
+    try {
+
+        $favorite = $params['favorite'];
+        $userId = $params['userId'];
+
+        if($favorite < 0) {
+
+            echo json_encode(array(
+                'success' => false,
+                'message' => 'Missing one or more required fields'
+            ));
+
+            return;
+
+        }
+
+        $notes = new Notes($this->db);
+
+        $result = $notes->getFavoriteList($favorite, $userId);
+
+        echo json_encode(array(
+            'success' => true,
+            'count' => count($result),
+            'results' => $result
+        ));
+
+    }
+    catch(Exception $e) {
+
+        echo json_encode(array(
+            'success' => false,
+            'message' => $e->getMessage()
+        ));
+
+    }
+
+}
 }
 ?>
