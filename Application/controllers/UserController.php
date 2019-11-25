@@ -1,28 +1,28 @@
   
 <?php
 class UserController extends Controller {
-    function beforeroute() {
-        //Check to make sure token passed is valid
-        try {
-            $userToken = new UserToken($this->db);
-            $token = $this->f3->get('HEADERS.Token');
+    // function beforeroute() {
+    //     //Check to make sure token passed is valid
+    //     try {
+    //         $userToken = new UserToken($this->db);
+    //         $token = $this->f3->get('HEADERS.Token');
     
-            $result = $userToken->verifyToken($token);
+    //         $result = $userToken->verifyToken($token);
     
-            if(empty($result) || $result['expiryDate'] < date('Y-m-d H:i:s')) {
-                $this->f3->error(403);
-            }
-        }
-        catch(Exception $e) {
-            header('Content-type:application/json');
-            echo json_encode(array(
-                'success' => false,
-                'message' => $e->getMessage()
-            ));
+    //         if(empty($result) || $result['expiryDate'] < date('Y-m-d H:i:s')) {
+    //             $this->f3->error(403);
+    //         }
+    //     }
+    //     catch(Exception $e) {
+    //         header('Content-type:application/json');
+    //         echo json_encode(array(
+    //             'success' => false,
+    //             'message' => $e->getMessage()
+    //         ));
             
-            exit;
-        }
-    }
+    //         exit;
+    //     }
+    // }
     
     function getUser($f3, $params) {
         
@@ -88,7 +88,7 @@ class UserController extends Controller {
                     return;
                 }
 
-                if(empty($data['title']) || empty($data['firstName']) || empty($data['lastName']) || empty($data['dateOfBirth']) || empty($data['gender']) || empty($data['mobileNumber']) || empty($data['telephoneNumber']) || empty($data['email']) || empty($data['userGroupId'])) {
+                if(empty($data['title']) || empty($data['firstName']) || empty($data['lastName']) || empty($data['dateOfBirth']) || empty($data['gender']) || empty($data['mobileNumber']) || empty($data['email'])) {
 
                     echo json_encode(array(
                         'success' => false,
@@ -99,7 +99,7 @@ class UserController extends Controller {
 
                 }
 
-                if(($data['userGroupId'] == 2 || $data['userGroupId'] == 3) && empty($data['password'])) {
+                if(empty($data['password'])) {
 
                     echo json_encode(array(
                         'success' => false,
@@ -118,6 +118,7 @@ class UserController extends Controller {
 
                 } while(!empty($result));
 
+                $data['userGroupId'] = 2;
                 $data['password'] = md5($data['password']);
                 $data['created'] = date('Y-m-d H:i:s');
                 $data['disabled'] = 0;
