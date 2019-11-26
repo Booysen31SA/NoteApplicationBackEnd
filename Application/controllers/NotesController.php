@@ -122,6 +122,7 @@
         
                 }
     
+                $data['favorite'] = 0;
                 $data['dateCreated'] = date('Y-m-d H:i:s');
                 $data['disabled'] = 0;
     
