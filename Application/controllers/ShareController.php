@@ -133,7 +133,6 @@
 
                 $data['modified'] = date('Y-m-d H:i:s');
                 $data['disabled'] = 0;
-                $data['admin'] = $userResult[0]['userId'];
                 $data['accessRight'] = $rightsResults[0]['ID'];
 
                 $share->create($data);
