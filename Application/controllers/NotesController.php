@@ -85,7 +85,7 @@
 
             if(!empty($id)){
 
-                $result = $notes->readById($id);
+                $result = $notes->readByTitle($id);
 
                 if(empty($result)){
                     echo json_encode(array(
@@ -109,7 +109,7 @@
     
                 return;
             }else{
-                $result = $notes->readById($id);
+                $result = $notes->readByTitle($id);
     
                 if(!empty($result)) {
                 
@@ -141,7 +141,7 @@
             ));
         }
     }
-    function readbyID($f3, $params){
+    function readByTitle($f3, $params){
 
         header('Content-type:application/json');
 
@@ -160,7 +160,7 @@
             }
 
             $notes = new Notes($this->db);
-            $result = $notes->readById($id);
+            $result = $notes->readByTitle($id);
 
             if(empty($result) || $result['disabled'] > 0) {
                 
@@ -205,7 +205,7 @@
 
             $notes = new Notes($this->db);
 
-            $result = $notes->readById($Title);
+            $result = $notes->readByTitle($Title);
 
             if(empty($result)){
                 echo json_encode(array(
