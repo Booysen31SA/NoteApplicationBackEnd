@@ -19,5 +19,19 @@
             throw new Exception($e);
         }
     }
+
+    public function getAll($disabled, $userId){
+        try{
+
+            $query = "SELECT * FROM shared_notes WHERE disabled = '$disabled' AND userId = '$userId' ORDER BY created DESC";
+
+            $result = $this->db->exec($query);
+
+            return $result;
+
+            }catch(Exception $e){
+               throw new Exception($e);
+            }
+    }
     }
 ?>
