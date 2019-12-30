@@ -34,7 +34,7 @@
            }
        }
 
-       public function readById($id){
+       public function readByTitle($id){
           try{
  
             $query = "SELECT * FROM notes WHERE Title = '$id' AND disabled = 0 ORDER BY dateCreated DESC";

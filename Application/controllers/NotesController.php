@@ -85,7 +85,7 @@
 
             if(!empty($id)){
 
-                $result = $notes->readById($id);
+                $result = $notes->readByTitle($id);
 
                 if(empty($result)){
                     echo json_encode(array(
@@ -109,7 +109,7 @@
     
                 return;
             }else{
-                $result = $notes->readById($id);
+                $result = $notes->readByTitle($id);
     
                 if(!empty($result)) {
                 
@@ -122,6 +122,7 @@
         
                 }
     
+                $data['favorite'] = 0;
                 $data['dateCreated'] = date('Y-m-d H:i:s');
                 $data['disabled'] = 0;
     
@@ -140,7 +141,7 @@
             ));
         }
     }
-    function readbyID($f3, $params){
+    function readByTitle($f3, $params){
 
         header('Content-type:application/json');
 
@@ -159,7 +160,7 @@
             }
 
             $notes = new Notes($this->db);
-            $result = $notes->readById($id);
+            $result = $notes->readByTitle($id);
 
             if(empty($result) || $result['disabled'] > 0) {
                 
@@ -204,7 +205,7 @@
 
             $notes = new Notes($this->db);
 
-            $result = $notes->readById($Title);
+            $result = $notes->readByTitle($Title);
 
             if(empty($result)){
                 echo json_encode(array(
@@ -362,5 +363,45 @@ function getAllFavorites($f3, $params) {
     }
 
 }
+
+   function getAllNotesByID($f3, $params) {
+
+    header('Content-type:application/json');
+
+    try {
+
+        $favorite = $params['ID'];
+
+        if($favorite < 0) {
+
+            echo json_encode(array(
+                'success' => false,
+                'message' => 'Missing one or more required fields'
+            ));
+
+            return;
+
+        }
+
+        $notes = new Notes($this->db);
+
+        $result = $notes->getId($favorite);
+
+        echo json_encode(array(
+            'success' => true,
+            'count' => count($result),
+            'results' => $result
+        ));
+
+    }
+    catch(Exception $e) {
+
+        echo json_encode(array(
+            'success' => false,
+            'message' => $e->getMessage()
+        ));
+
+    }
+   }
 }
 ?>
