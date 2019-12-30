@@ -68,7 +68,7 @@
                 if(empty($userResult)){
                     echo json_encode(array(
                         'success' => false,
-                        'message' => 'Note does not exist'
+                        'message' => 'User does not exist'
                     ));
         
                     return; 
@@ -86,14 +86,16 @@
                 $data['ID'] = $noteResult[0]['ID'];
                 $data['created'] =  date('Y-m-d H:i:s');
                 $data['disabled'] = 0;
-                $data['admin'] = $userResult[0]['userId'];
+                $data['admin'] = $data['admin'];
                 $data['accessRight'] = $rightsResults[0]['ID'];
 
                 $share->create($data);
     
                 echo json_encode(array(
                     'success' => true,
-                    'message' => 'note successfully created'
+                    'message' => 'note successfully Shared with ',
+                    'shareWith' => $data['userId'],
+                    'done' => 'created'
                 ));
     
                 return;
@@ -139,7 +141,9 @@
     
                 echo json_encode(array(
                     'success' => true,
-                    'message' => 'note successfully updated'
+                    'message' => 'Sharing details updated',
+                    'shareWith' => $data['userId'],
+                    'done' => 'created'
                 ));
     
                 return;
